@@ -1,24 +1,65 @@
 import { FC, useMemo } from 'react';
 import { TConstructorIngredient } from '@utils-types';
 import { BurgerConstructorUI } from '@ui';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  clearOrder,
+  createOrder,
+  getConstructorItems,
+  getOrderModalData,
+  getOrderRequest
+} from '../../services/slices/BurgerConstructorSlice';
+import {
+  selectIsAuthChecked,
+  selectIsLoggedIn
+} from '../../services/slices/UserInfoSlice';
+import { useNavigate } from 'react-router-dom';
+import { AppDispatch } from 'src/services/store';
 
 export const BurgerConstructor: FC = () => {
-  /** TODO: взять переменные constructorItems, orderRequest и orderModalData из стора */
-  const constructorItems = {
-    bun: {
-      price: 0
-    },
-    ingredients: []
-  };
+  const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
 
-  const orderRequest = false;
+  const constructorItems = useSelector(getConstructorItems);
 
-  const orderModalData = null;
+  const orderRequest = useSelector(getOrderRequest); //статус запроса создания заказа
+  const authCheck = useSelector(selectIsLoggedIn); //пров. автор-ии
+
+  const orderModalData = useSelector(getOrderModalData);
 
   const onOrderClick = () => {
+    if (!authCheck) {
+      return navigate('/login');
+    }
     if (!constructorItems.bun || orderRequest) return;
+
+    // идентификатор булки
+    const bunId = constructorItems.bun ? constructorItems.bun._id : null;
+    // массив идентификаторов ингредиентов
+    const ingredientIds = constructorItems.ingredients.map(
+      (ingredient) => ingredient._id
+    );
+    // массив заказа
+    const order = [];
+    // если есть булка, добавляем ее в начало и конец массива заказа
+    if (bunId) {
+      order.push(bunId);
+    }
+    // Добавляем идентификаторы ингредиентов в массив заказа
+    order.push(...ingredientIds);
+
+    if (bunId) {
+      order.push(bunId);
+    }
+    // удаляем все ложные значения из массива заказа
+    const filteredOrder = order.filter(Boolean);
+
+    dispatch(createOrder(filteredOrder));
   };
-  const closeOrderModal = () => {};
+  const closeOrderModal = () => {
+    dispatch(clearOrder());
+    navigate('/');
+  };
 
   const price = useMemo(
     () =>
@@ -29,8 +70,6 @@ export const BurgerConstructor: FC = () => {
       ),
     [constructorItems]
   );
-
-  return null;
 
   return (
     <BurgerConstructorUI
