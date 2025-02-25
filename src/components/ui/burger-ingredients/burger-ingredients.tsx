@@ -59,7 +59,7 @@ export const BurgerIngredientsUI: FC<BurgerIngredientsUIProps> = memo(
             title='Соусы'
             titleRef={titleSaucesRef}
             ingredients={sauces}
-            ref={saucesRef}
+            ref={saucesRef} //?
           />
         </div>
       </section>
