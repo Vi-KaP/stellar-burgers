@@ -32,6 +32,7 @@ export const BurgerConstructor: FC = () => {
       return navigate('/login');
     }
     if (!constructorItems.bun || orderRequest) return;
+    console.log(constructorItems);
 
     // идентификатор булки
     const bunId = constructorItems.bun ? constructorItems.bun._id : null;
@@ -53,9 +54,13 @@ export const BurgerConstructor: FC = () => {
     }
     // удаляем все ложные значения из массива заказа
     const filteredOrder = order.filter(Boolean);
+    console.log(filteredOrder);
 
     dispatch(createOrder(filteredOrder));
   };
+
+  console.log(clearOrder);
+
   const closeOrderModal = () => {
     dispatch(clearOrder());
     navigate('/');
