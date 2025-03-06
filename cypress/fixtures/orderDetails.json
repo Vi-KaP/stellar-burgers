@@ -1,0 +1,25 @@
+{
+  "success": true,
+  "order": {
+    "number": 3070,
+    "ingredients": [
+      {
+        "_id": "60d3b41abdacab0026a733c6",
+        "name": "Краторная булка N-200i",
+        "type": "bun",
+        "proteins": 80,
+        "fat": 24,
+        "carbohydrates": 53,
+        "calories": 420,
+        "price": 1255,
+        "image": "https://example.com/image1.png",
+        "image_mobile": "https://example.com/image1-mobile.png",
+        "image_large": "https://example.com/image1-large.png",
+        "__v": 0
+      }
+    ],
+    "status": "done",
+    "createdAt": "2023-10-01T12:34:56.789Z",
+    "updatedAt": "2023-10-01T12:34:56.789Z"
+  }
+}

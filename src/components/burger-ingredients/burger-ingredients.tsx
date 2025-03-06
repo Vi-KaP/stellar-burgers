@@ -14,7 +14,6 @@ import { Preloader } from '@ui';
 export const BurgerIngredients: FC = () => {
   const isLoading = useSelector(getLoadingStatus);
   const ingredients = useSelector(getIngredientsWithSelector);
-  console.log(ingredients);
 
   const buns = ingredients.filter((item) => item.type === 'bun');
   const mains = ingredients.filter((item) => item.type === 'main');

@@ -1,3 +1,5 @@
+import { URL } from "./create-login-file.cy";
+
 interface Ingredient {
   _id: string;
   name: string;
@@ -14,6 +16,13 @@ interface Ingredient {
 }
 
 describe('Save full order response to fixture without authorization', () => {
+  beforeEach(() => {
+    // Мокируем запросы
+    cy.intercept('GET', `${URL}/ingredients`, { fixture: 'ingredients.json' }).as('getIngredients');
+    cy.intercept('POST', `${URL}/orders`, { fixture: 'successOrder.json' }).as('createOrder');
+    cy.intercept('GET', `${URL}/api/orders/*`, { fixture: 'orderDetails.json' }).as('getOrderDetails');
+  });
+
   it('Should save full order response to fixture', function () {
     // Шаг 1: Загрузка ингредиентов из файла
     cy.fixture('ingredients').then((ingredients: { success: boolean; data: Ingredient[] }) => {
@@ -23,7 +32,7 @@ describe('Save full order response to fixture without authorization', () => {
       // Шаг 2: Создание заказа без авторизации
       cy.request({
         method: 'POST',
-        url: 'https://norma.nomoreparties.space/api/orders',
+        url: `${URL}/orders`,
         body: {
           ingredients: ingredientIds,
         },
@@ -41,16 +50,16 @@ describe('Save full order response to fixture without authorization', () => {
         const orderNumber = response.body.order.number;
         cy.request({
           method: 'GET',
-          url: `https://norma.nomoreparties.space/api/orders/${orderNumber}`,
+          url: `${URL}/orders/${orderNumber}`,
           failOnStatusCode: false
         }).then((orderResponse) => {
-          console.log('Полная информация о заказе:', orderResponse); // Логируем ответ
+          console.log('Полная информация о заказе:', orderResponse); 
 
           if (orderResponse.status === 404) {
             throw new Error('Заказ не найден');
           }
 
-          expect(orderResponse.status).to.eq(200); // Проверка успешного получения данных
+          expect(orderResponse.status).to.eq(200); 
 
           // Сохранение ответа в файл
           cy.writeFile('cypress/fixtures/successOrder.json', orderResponse.body);

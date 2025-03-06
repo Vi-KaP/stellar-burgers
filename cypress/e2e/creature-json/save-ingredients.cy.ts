@@ -1,12 +1,14 @@
+import { URL } from "./create-login-file.cy";
+
 describe('Save ingredients to fixture', () => {
   it('Should save ingredients to fixture', function () {
     // Шаг 1: Запрос на получение списка ингредиентов
     cy.request({
       method: 'GET',
-      url: 'https://norma.nomoreparties.space/api/ingredients', // Убедитесь, что это правильный эндпоинт
+      url: `${URL}/ingredients`,
     }).then((response) => {
       // Проверяем статус ответа
-      expect(response.status).to.eq(200); // Убедитесь, что запрос успешен
+      expect(response.status).to.eq(200); 
 
       // Шаг 2: Формируем данные в нужном формате
       const ingredientsData = {
