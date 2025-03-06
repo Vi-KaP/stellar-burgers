@@ -1,3 +1,5 @@
+import { URL } from "./create-login-file.cy";
+
 interface Ingredient {
   _id: string;
   name: string;
@@ -23,7 +25,7 @@ describe('Save full order response to fixture without authorization', () => {
       // Шаг 2: Создание заказа без авторизации
       cy.request({
         method: 'POST',
-        url: 'https://norma.nomoreparties.space/api/orders',
+        url: `${URL}/orders`,
         body: {
           ingredients: ingredientIds,
         },
@@ -41,7 +43,7 @@ describe('Save full order response to fixture without authorization', () => {
         const orderNumber = response.body.order.number;
         cy.request({
           method: 'GET',
-          url: `https://norma.nomoreparties.space/api/orders/${orderNumber}`,
+          url: `${URL}/api/orders/${orderNumber}`,
           failOnStatusCode: false
         }).then((orderResponse) => {
           console.log('Полная информация о заказе:', orderResponse); // Логируем ответ

@@ -27,8 +27,6 @@ export const OrderInfo: FC = () => {
     if (!orderData || !ingredients.length) return;
 
     const date = new Date(orderData.createdAt);
-    console.log(orderInfo);
-    console.log(orderData);
 
     type TIngredientsWithCount = {
       [key: string]: TIngredient & { count: number };

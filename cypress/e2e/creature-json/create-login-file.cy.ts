@@ -1,9 +1,12 @@
+export const URL = 'https://norma.nomoreparties.space/api';
+
+
 describe('Create login.json file from API response', () => {
   it('Should create login.json file with data from API', function () {
     // Шаг 1: Выполнение запроса к API
     cy.request({
       method: 'POST',
-      url: 'https://norma.nomoreparties.space/api/auth/login',
+      url: `${URL}/auth/login`,
       body: {
         email: 'test120@mail.ru', 
         password: '1234test' 

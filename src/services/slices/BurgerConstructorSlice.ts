@@ -7,7 +7,7 @@ import {
 import { TConstructorIngredient, TIngredient, TOrder } from '@utils-types';
 import { sendOrderRequest } from '../component-api';
 
-type TBurgerConstructor = {
+export type TBurgerConstructor = {
   constructorItems: {
     bun: TIngredient | null;
     ingredients: Array<TConstructorIngredient>;

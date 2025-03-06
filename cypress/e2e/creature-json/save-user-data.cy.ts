@@ -1,12 +1,14 @@
+import { URL } from "./create-login-file.cy"
+
 describe('Save user data to fixture', () => {
   it('Should save user data to fixture', function () {
     // Шаг 1: Авторизация и получение данных пользователя
     cy.request({
       method: 'POST',
-      url: 'https://norma.nomoreparties.space/api/auth/login',
+      url: `${URL}/auth/login`,
       body: {
-        email: 'as@k.com',
-        password: '1234'
+        email: 'test120@mail.ru',
+        password: '1234test' 
       }
     }).then((response) => {
       // Проверяем, что запрос успешен
