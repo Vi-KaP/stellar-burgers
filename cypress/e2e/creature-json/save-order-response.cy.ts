@@ -16,6 +16,13 @@ interface Ingredient {
 }
 
 describe('Save full order response to fixture without authorization', () => {
+  beforeEach(() => {
+    // Мокируем запросы
+    cy.intercept('GET', `${URL}/ingredients`, { fixture: 'ingredients.json' }).as('getIngredients');
+    cy.intercept('POST', `${URL}/orders`, { fixture: 'successOrder.json' }).as('createOrder');
+    cy.intercept('GET', `${URL}/api/orders/*`, { fixture: 'orderDetails.json' }).as('getOrderDetails');
+  });
+
   it('Should save full order response to fixture', function () {
     // Шаг 1: Загрузка ингредиентов из файла
     cy.fixture('ingredients').then((ingredients: { success: boolean; data: Ingredient[] }) => {
@@ -43,7 +50,7 @@ describe('Save full order response to fixture without authorization', () => {
         const orderNumber = response.body.order.number;
         cy.request({
           method: 'GET',
-          url: `${URL}/api/orders/${orderNumber}`,
+          url: `${URL}/orders/${orderNumber}`, // Исправленный URL (без дублирования /api)
           failOnStatusCode: false
         }).then((orderResponse) => {
           console.log('Полная информация о заказе:', orderResponse); // Логируем ответ
