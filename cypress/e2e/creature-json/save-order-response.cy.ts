@@ -50,16 +50,16 @@ describe('Save full order response to fixture without authorization', () => {
         const orderNumber = response.body.order.number;
         cy.request({
           method: 'GET',
-          url: `${URL}/orders/${orderNumber}`, // Исправленный URL (без дублирования /api)
+          url: `${URL}/orders/${orderNumber}`,
           failOnStatusCode: false
         }).then((orderResponse) => {
-          console.log('Полная информация о заказе:', orderResponse); // Логируем ответ
+          console.log('Полная информация о заказе:', orderResponse); 
 
           if (orderResponse.status === 404) {
             throw new Error('Заказ не найден');
           }
 
-          expect(orderResponse.status).to.eq(200); // Проверка успешного получения данных
+          expect(orderResponse.status).to.eq(200); 
 
           // Сохранение ответа в файл
           cy.writeFile('cypress/fixtures/successOrder.json', orderResponse.body);
