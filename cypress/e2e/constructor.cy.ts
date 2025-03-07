@@ -17,7 +17,6 @@ describe('Constructor page test', () => {
       'Краторная булка N-200i'
     );
 
-    // Кликаем на кнопку "Добавить" для булки
     cy.get(SELECTORS.BUN_INGREDIENTS).contains('Добавить').click();
 
     // Проверяем, что булки добавлены в конструктор
@@ -40,7 +39,6 @@ describe('Constructor page test', () => {
       'Соус Spicy-X'
     );
 
-    // Кликаем на кнопку "Добавить" для основного ингредиента
     cy.get(SELECTORS.MAIN_INGREDIENTS).contains('Добавить').click();
 
     // Проверяем, что основной ингредиент добавлен в конструктор
@@ -49,7 +47,6 @@ describe('Constructor page test', () => {
       'Биокотлета из марсианской Магнолии'
     );
 
-    // Кликаем на кнопку "Добавить" для соуса
     cy.get(SELECTORS.SOUCE_INGREDIENTS).contains('Добавить').click();
 
     // Проверяем, что соус добавлен в конструктор

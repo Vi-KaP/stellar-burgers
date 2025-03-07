@@ -13,7 +13,7 @@ describe('Save ingredients to fixture', () => {
       // Шаг 2: Формируем данные в нужном формате
       const ingredientsData = {
         success: true,
-        data: response.body.data, // Предполагаем, что API возвращает данные в поле `data`
+        data: response.body.data,
       };
 
       // Шаг 3: Сохранение данных в файл
